@@ -13,7 +13,7 @@ public class ServerConfigModel {
     private int socketTimeoutMills;
     private int ioThreadCount;
     private int configMaxRetryTimeout;
-    private List<String> HostAndPorts;
+    private List<String> hostAndPorts;
 
     public String getCluster() {
         return cluster;
@@ -64,10 +64,10 @@ public class ServerConfigModel {
     }
 
     public List<String> getHostAndPorts() {
-        return HostAndPorts;
+        return hostAndPorts;
     }
 
     public void setHostAndPorts(List<String> hostAndPorts) {
-        HostAndPorts = hostAndPorts;
+        this.hostAndPorts = hostAndPorts;
     }
 }

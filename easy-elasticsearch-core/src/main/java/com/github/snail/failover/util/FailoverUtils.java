@@ -26,7 +26,7 @@ import com.github.snail.util.ThrowableFunction;
 /**
  * @author w.vela
  */
-public class FailoverUtils {
+public final class FailoverUtils {
 
     private FailoverUtils() {
         throw new UnsupportedOperationException();

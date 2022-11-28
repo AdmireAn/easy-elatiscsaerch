@@ -1,11 +1,11 @@
 com/github/snail/az/AvailableZone.class
-com/github/snail/client/ElasticSearchRestClientWithCheck$2.class
 com/github/snail/client/ElasticSearchRestClientHolder.class
 com/github/snail/failover/impl/WeightFailoverCheckTask$RecoveryFutureSupplier.class
 com/github/snail/client/ElasticsearchRestClient.class
 com/github/snail/util/EasyElasticsearchUtils.class
 com/github/snail/enums/ElasticSearchVersion.class
 com/github/snail/exception/NoAvailableResourceException.class
+com/github/snail/ElasticSearchRestIndexConfig.class
 com/github/snail/ElasticSearchRestQuery.class
 com/github/snail/failover/impl/PriorityFailover$GroupWeightInfo.class
 com/github/snail/ElasticSearchRestIndex$1.class
@@ -31,6 +31,7 @@ com/github/snail/ElasticSearchRestFuture.class
 com/github/snail/constant/ElasticSearchConstant.class
 com/github/snail/failover/util/AliasMethod.class
 com/github/snail/failover/impl/WeightFailover$AllAvailable.class
+com/github/snail/listener/ElasticSearchDefaultResponseListener.class
 com/github/snail/ElasticSearchExecuteContext$1.class
 com/github/snail/failover/impl/WeightFailoverCheckTask$MyPhantomReference.class
 com/github/snail/constant/ElasticSearchConstant$RequestParam.class
@@ -72,3 +73,4 @@ com/github/snail/failover/impl/PriorityFailover$ResInfo.class
 com/github/snail/az/InternalPhysicalAvailableZoneImpl.class
 com/github/snail/failover/impl/GcUtil.class
 com/github/snail/failover/impl/WeightListener.class
+com/github/snail/listener/ElasticSearchResponseListener.class

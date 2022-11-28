@@ -7,8 +7,7 @@ package com.github.snail.constant;
 public enum SourceKey {
 
     // 测试索引
-    EASY_WRITE_ELASTICSEARCH("easy_write_elasticsearch"),
-    ;
+    EASY_WRITE_ELASTICSEARCH("easy_write_elasticsearch");
     private String key;
 
     SourceKey(String key) {

@@ -35,7 +35,7 @@ import com.google.common.collect.Lists;
  * Created on 2022-11-28
  */
 public class ESSearchServiceImpl implements ESSearchService {
-    private static final Logger log = LoggerFactory.getLogger(ESSearchServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ESSearchServiceImpl.class);
 
     private static final String LOG_TEMPLATE = "search context sourceName:{} aliasName:{} shards:{}"
             + " statue:{} exe_cost:{}, es_cost:{}, total:{}, from:{}, size:{}, dsl:\n{}";
@@ -54,7 +54,7 @@ public class ESSearchServiceImpl implements ESSearchService {
     public <T> void bulkUpsert(List<T> docs) {
         List<ThreeTuple<Object, String, Object>> dataList = buildBulkData(docs);
         if (CollectionUtils.isEmpty(dataList)) {
-            log.warn("ESSearchService bulkUpsert empty docs");
+            LOGGER.warn("ESSearchService bulkUpsert empty docs");
             return;
         }
         Document document = ModelTransferUtils.format(docs.get(0));
@@ -65,7 +65,7 @@ public class ESSearchServiceImpl implements ESSearchService {
         connections.forEach(connection -> {
             try {
                 ElasticSearchRestIndex elasticSearchRestIndex = connection.get();
-                log.info("asyncBulkUpsert operation, resource:{}, index:{}, type:{}, size:{}, request:{}",
+                LOGGER.info("asyncBulkUpsert operation, resource:{}, index:{}, type:{}, size:{}, request:{}",
                         sourceKey,
                         connection.indexName(),
                         ClientConfig.type(sourceKey),
@@ -77,17 +77,17 @@ public class ESSearchServiceImpl implements ESSearchService {
                 ESBulkResponse esBulkResponse = ESBulkResponse.of(response);
                 if (esBulkResponse.errors()) {
                     String cluster = connection.cluster().getName();
-                    log.error(
+                    LOGGER.error(
                             "elasticsearch asyncBulkUpsert request fail,请联系tianwenlong确认是否集群问题，是否需要切换备用集群, "
                                     + "resource:{},cluster:{}", sourceKey, cluster);
                 }
-                log.info("asyncBulkUpsert operation, resource:{}, index:{}, type:{}, size:{},rsp:{}",
+                LOGGER.info("asyncBulkUpsert operation, resource:{}, index:{}, type:{}, size:{},rsp:{}",
                         sourceKey,
                         connection.indexName(),
                         ClientConfig.type(sourceKey),
                         dataList.size(), esBulkResponse.responseJson());
             } catch (Exception e) {
-                log.error(
+                LOGGER.error(
                         "elasticsearch asyncBulkUpsert request fail resource:{},connection:{}",
                         sourceKey, connection.cluster().getName(), e);
             }
@@ -107,7 +107,7 @@ public class ESSearchServiceImpl implements ESSearchService {
 
             return ModelTransferUtils.transfer(esSearchResponse);
         } catch (SourceNotFoundException e) {
-            log.warn("search source not found, message:{}", e.getMessage());
+            LOGGER.warn("search source not found, message:{}", e.getMessage());
             throw e;
         }
     }
@@ -128,7 +128,7 @@ public class ESSearchServiceImpl implements ESSearchService {
                 ThreeTuple tuple = Tuple.tuple(partition, id, ObjectMapperUtils.fromJson(document.getSource()));
                 tuples.add(tuple);
             } catch (Exception e) {
-                log.error("buildBulkData发生异常 商品检索库更新失败,doc:{}", ObjectMapperUtils.toJSON(doc), e);
+                LOGGER.error("buildBulkData发生异常 商品检索库更新失败,doc:{}", ObjectMapperUtils.toJSON(doc), e);
             }
         });
         return tuples;

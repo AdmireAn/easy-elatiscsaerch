@@ -32,7 +32,7 @@ import com.google.common.base.Strings;
  */
 public class ModelTransferUtils {
 
-    private static final Logger logger = LoggerFactory.getLogger(ModelTransferUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ModelTransferUtils.class);
 
     private static final ObjectMapper OBJECTMAPPER = new ObjectMapper();
 
@@ -130,7 +130,7 @@ public class ModelTransferUtils {
         try {
             document.setSource(OBJECTMAPPER.writeValueAsString(object));
         } catch (JsonProcessingException e) {
-            logger.error("Json序列化异常:{}", id, e);
+            LOGGER.error("Json序列化异常:{}", id, e);
         }
         return document;
     }

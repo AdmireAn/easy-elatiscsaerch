@@ -30,7 +30,7 @@ import com.github.snail.util.MoreSuppliers.CloseableSupplier;
 class WeightFailoverCheckTask<T> {
 
     private static final Logger
-            logger = LoggerFactory.getLogger(WeightFailoverCheckTask.class);
+            LOGGER = LoggerFactory.getLogger(WeightFailoverCheckTask.class);
 
     static final int CLEAN_INIT_DELAY_SECONDS = 5;
     static final int CLEAN_DELAY_SECONDS = 10;
@@ -57,7 +57,7 @@ class WeightFailoverCheckTask<T> {
         private CloseableSupplier<ScheduledFuture<?>> recoveryFuture;
         private AtomicBoolean closed;
         private String failoverName;
-        public MyPhantomReference(
+        MyPhantomReference(
                 WeightFailover<X> referent, ReferenceQueue<WeightFailover<?>> q,
                 CloseableSupplier<ScheduledFuture<?>> recoveryFuture, AtomicBoolean closed) {
             super(referent, q);
@@ -68,7 +68,7 @@ class WeightFailoverCheckTask<T> {
 
         private void close() {
             if (!closed.get()) {
-                logger.warn("failover not released manually: {}", failoverName);
+                LOGGER.warn("failover not released manually: {}", failoverName);
                 closed.set(true);
                 WeightFailover.tryCloseRecoveryScheduler(recoveryFuture, () -> failoverName);
             }
@@ -81,7 +81,7 @@ class WeightFailoverCheckTask<T> {
         private final long initDelay;
         private final long delay;
 
-        public RecoveryFutureSupplier(Runnable runnable, long initDelay, long delay) {
+        RecoveryFutureSupplier(Runnable runnable, long initDelay, long delay) {
             this.runnable = runnable;
             this.initDelay = initDelay;
             this.delay = delay;
@@ -142,7 +142,7 @@ class WeightFailoverCheckTask<T> {
                 }
             });
             if (!recoveredObjects.isEmpty()) {
-                logger.info("found recovered objects:{}", recoveredObjects);
+                LOGGER.info("found recovered objects:{}", recoveredObjects);
             }
             recoveredObjects.forEach((recovered, rate) -> {
                 Integer initWeight = initWeightMap.get(recovered);
@@ -158,7 +158,7 @@ class WeightFailoverCheckTask<T> {
                 }
             });
         } catch (Throwable e) {
-            logger.error("", e);
+            LOGGER.error("", e);
         } finally {
             currentThread.setName(origName);
         }

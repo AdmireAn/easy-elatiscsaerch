@@ -20,7 +20,8 @@ import com.github.snail.util.ObjectMapperUtils;
  */
 public class AggregationResultParser {
 
-    private static final Logger logger = LoggerFactory.getLogger(AggregationResultParser.class);
+    private static final Logger LOGGER
+            = LoggerFactory.getLogger(AggregationResultParser.class);
 
     public static AggregationResults aggregationResults(String aggJson) {
         AggregationResults results = new AggregationResults();

@@ -14,13 +14,14 @@ import com.github.snail.exception.SourceNotFoundException;
 import com.google.common.collect.Lists;
 
 /**
- *  获取es连接
+ * 获取es连接
+ *
  * @author snail
  * Created on 2022-11-28
  */
 public class SourceSelector {
 
-    private static final Logger log = LoggerFactory.getLogger(SourceSelector.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SourceSelector.class);
 
 
     public RestConnection select(String sourceKey) {
@@ -43,7 +44,7 @@ public class SourceSelector {
         for (RestConnection connection : connections) {
             names.add(connection.cluster().getName());
         }
-        log.info("selects key is:{}, clusters:{}", sourceKey, names);
+        LOGGER.info("selects key is:{}, clusters:{}", sourceKey, names);
         return connections;
     }
 }

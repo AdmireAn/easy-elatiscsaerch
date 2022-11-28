@@ -41,7 +41,7 @@ import com.google.common.collect.ImmutableList;
  */
 public class RestConnection implements ElasticSearchRestIndexConfig {
 
-    private static final Logger logger = LoggerFactory.getLogger(RestConnection.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RestConnection.class);
 
     private static final String MAGIC = "ewe-";
 
@@ -71,7 +71,7 @@ public class RestConnection implements ElasticSearchRestIndexConfig {
         this.readAliasName = ClientConfig.readIndexName(key);
         this.writeAliasName = ClientConfig.writeIndexName(key);
         this.cluster = BizCluster.getCluster(cluster);
-        logger.info("key:{}, readAliasName:{}, writeAliasName:{}, clusterName:{}",
+        LOGGER.info("key:{}, readAliasName:{}, writeAliasName:{}, clusterName:{}",
                 key, readAliasName, writeAliasName, this.cluster == null
                                                     ? cluster + " but cluster is null" : cluster);
 

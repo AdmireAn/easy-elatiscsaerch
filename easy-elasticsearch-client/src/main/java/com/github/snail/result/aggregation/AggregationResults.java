@@ -65,7 +65,7 @@ public class AggregationResults {
         }
         return groupByInfo.getBuckets().stream()
                 .collect(Collectors.toMap(bucket -> Long.parseLong(bucket.getKey()),
-                        bucket -> Integer.parseInt(bucket.getDocCount())));
+                    bucket -> Integer.parseInt(bucket.getDocCount())));
     }
 
     /**
@@ -78,7 +78,7 @@ public class AggregationResults {
         }
         return groupByInfo.getBuckets().stream()
                 .collect(Collectors.toMap(bucket -> Integer.parseInt(bucket.getKey()),
-                        bucket -> Integer.parseInt(bucket.getDocCount())));
+                    bucket -> Integer.parseInt(bucket.getDocCount())));
     }
 
 }

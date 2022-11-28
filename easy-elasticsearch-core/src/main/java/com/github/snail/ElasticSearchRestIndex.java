@@ -1,11 +1,11 @@
 package com.github.snail;
 
-import static com.github.snail.enums.ElasticSearchVersion.VERSION_2_X;
 import static com.github.snail.constant.ElasticSearchConstant.DOC;
 import static com.github.snail.constant.ElasticSearchConstant.DOC_AS_UPSERT;
 import static com.github.snail.constant.ElasticSearchConstant.Method.GET;
 import static com.github.snail.constant.ElasticSearchConstant.Method.POST;
 import static com.github.snail.constant.ElasticSearchConstant.VERSION;
+import static com.github.snail.enums.ElasticSearchVersion.VERSION_2_X;
 import static com.github.snail.util.JsonUtils.toJSON;
 import static com.github.snail.util.QueryBuilderUtils.buildQueryJSON;
 import static com.google.common.base.Preconditions.checkArgument;
@@ -64,9 +64,9 @@ import com.google.common.util.concurrent.ListenableFuture;
  * @author snail
  * Created on 2022-11-28
  */
-public class ElasticSearchRestIndex {
+public final class ElasticSearchRestIndex {
 
-    private static final Logger logger = LoggerFactory.getLogger(ElasticSearchRestIndex.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ElasticSearchRestIndex.class);
     private String indexName = "";
     private String aliasName = "";
     private final ElasticSearchRestIndexConfig restIndexConfig;
@@ -87,11 +87,12 @@ public class ElasticSearchRestIndex {
         return of(conf, AvailableZone.of("local"), PhysicalAvailableZone.of("local"));
     }
 
-    static <T extends ElasticSearchRestIndexConfig> ElasticSearchRestIndex
-    of(@Nonnull T conf, AvailableZone az, PhysicalAvailableZone paz) {
+    static <T extends ElasticSearchRestIndexConfig> ElasticSearchRestIndex of(@Nonnull T conf, AvailableZone az,
+            PhysicalAvailableZone paz) {
         checkNotNull(conf);
-        return INSTANCES.computeIfAbsent(Tuple.tuple(az, conf, paz),
-                tuple -> new ElasticSearchRestIndex(tuple.second, tuple.first, paz));
+        return INSTANCES
+                .computeIfAbsent(Tuple.tuple(az, conf, paz), tuple -> new ElasticSearchRestIndex(tuple.getSecond(),
+                        tuple.getFirst(), paz));
     }
 
     private ElasticSearchRestIndex(ElasticSearchRestIndexConfig conf, AvailableZone az, PhysicalAvailableZone paz) {
@@ -116,10 +117,10 @@ public class ElasticSearchRestIndex {
         List<InnerElasticSearchUpdateParam> tuples = sources.stream()
                 .map(t -> {
                     String idxName = this.indexName;
-                    if (t.first != null) {
-                        idxName = shardIndexName(t.first);
+                    if (t.getSecond() != null) {
+                        idxName = shardIndexName(t.getFirst());
                     }
-                    return new InnerElasticSearchUpdateParam(idxName, type, t.second, null, null, t.third);
+                    return new InnerElasticSearchUpdateParam(idxName, type, t.getSecond(), null, null, t.getThird());
                 }).collect(toList());
         return innerUpdateBulk(tuples, upsert);
     }
@@ -128,13 +129,13 @@ public class ElasticSearchRestIndex {
         return elasticSearchIndexPartitioner.partition(indexName, obj);
     }
 
-    public ListenableFuture<Response>
-    innerUpdateBulk(Collection<InnerElasticSearchUpdateParam> sources, boolean upsert) {
+    public ListenableFuture<Response> innerUpdateBulk(Collection<InnerElasticSearchUpdateParam> sources,
+            boolean upsert) {
         return innerUpdateBulk(sources, upsert, emptyMap());
     }
 
-    public ListenableFuture<Response>
-    innerUpdateBulk(Collection<InnerElasticSearchUpdateParam> sources, boolean upsert, Map<String, String> paramMap) {
+    public ListenableFuture<Response> innerUpdateBulk(Collection<InnerElasticSearchUpdateParam> sources, boolean upsert,
+            Map<String, String> paramMap) {
         if (isEmpty(sources)) {
             return Futures.immediateFuture(null);
         }
@@ -177,7 +178,7 @@ public class ElasticSearchRestIndex {
         String source = Joiner.on('\n').skipNulls().join(ret) + "\n";
         HttpEntity entity = buildRequestEntity(source);
 
-        logger.debug("updateBulk. dsl: {}", source);
+        LOGGER.debug("updateBulk. dsl: {}", source);
         return asyncExecute0(POST, endpoint, paramMap, entity, type, "insert");
     }
 
@@ -209,7 +210,7 @@ public class ElasticSearchRestIndex {
 
             @Override
             public void onSuccess(Response response) {
-                logger.error("onSuccess");
+                LOGGER.error("onSuccess");
                 future.set(response);
                 responseListener.onSuccess(builder.response(response).build());
             }
@@ -218,7 +219,7 @@ public class ElasticSearchRestIndex {
             public void onFailure(Exception exception) {
                 future.setException(exception);
                 responseListener.onFailure(builder.exception(exception).build());
-                logger.error("onFailure");
+                LOGGER.error("onFailure");
             }
         });
         return future;
@@ -342,7 +343,7 @@ public class ElasticSearchRestIndex {
 
         String source = toJSON(params);
 
-        logger.debug("search. dsl: {}", source);
+        LOGGER.debug("search. dsl: {}", source);
         return executeRequest(endpoint, query, source, index);
     }
 

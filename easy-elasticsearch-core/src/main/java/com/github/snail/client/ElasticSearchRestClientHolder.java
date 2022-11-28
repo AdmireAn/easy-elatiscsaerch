@@ -24,9 +24,9 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  * @author snail
  * Created on 2022-11-28
  */
-public class ElasticSearchRestClientHolder {
+public final class ElasticSearchRestClientHolder {
 
-    private static final Logger logger = LoggerFactory
+    private static final Logger LOGGER = LoggerFactory
             .getLogger(ElasticSearchRestClientHolder.class);
 
     private static final ConcurrentHashMap<ThreeTuple<AvailableZone, ? extends ElasticSearchRestClusterConfig,
@@ -53,7 +53,8 @@ public class ElasticSearchRestClientHolder {
     private static final long WAIT_AFTER_CLOSE = SECONDS.toMillis(10);
 
 
-    private ElasticSearchRestClientHolder(AvailableZone az, ElasticSearchRestClusterConfig clusterConfig, PhysicalAvailableZone paz) {
+    private ElasticSearchRestClientHolder(AvailableZone az, ElasticSearchRestClusterConfig clusterConfig,
+            PhysicalAvailableZone paz) {
 
         bizName = clusterConfig.getName();
         this.clusterConfig = clusterConfig;
@@ -63,7 +64,7 @@ public class ElasticSearchRestClientHolder {
     }
 
     private Supplier<ElasticSearchRestClientWithCheck> createRestClient() {
-        return ()-> new ElasticSearchRestClientWithCheck(bizName);
+        return () -> new ElasticSearchRestClientWithCheck(bizName);
     }
 
 
@@ -77,9 +78,9 @@ public class ElasticSearchRestClientHolder {
         }
 
         return INSTANCES.computeIfAbsent(tuple, t -> {
-            logger.info("elasticsearch rest client created. az: {} bizName: {}", az,
+            LOGGER.info("elasticsearch rest client created. az: {} bizName: {}", az,
                     clusterConfig.getName());
-            return new ElasticSearchRestClientHolder(t.first, clusterConfig, paz);
+            return new ElasticSearchRestClientHolder(t.getFirst(), clusterConfig, paz);
         });
     }
 

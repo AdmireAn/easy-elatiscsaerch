@@ -9,7 +9,7 @@ import com.github.snail.client.ElasticsearchRestClient;
  * @author snail
  * Created on 2022-11-28
  */
-public class ElasticSearchExecuteContext {
+public final class ElasticSearchExecuteContext {
     private final StopWatch stopWatch;
     private final ElasticSearchRestIndexConfig config;
     private final ElasticsearchRestClient restClient;

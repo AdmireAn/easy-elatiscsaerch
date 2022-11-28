@@ -40,7 +40,7 @@ import com.google.common.collect.ImmutableList;
 /**
  * 基于权重的failover，失败减，成功加，这是个早期的实现，用的也非常多，
  * 和{@link PriorityFailover}实现。
- *
+ * <p>
  * 需要注意的是：1、WeightFailover的权重是整数。2、WeightFailover不区分初始权重和最大权重（即初始权重总是等于最大权重）。
  *
  * <p>
@@ -51,7 +51,7 @@ import com.google.common.collect.ImmutableList;
  */
 public class WeightFailover<T> implements Failover<T>, Closeable {
 
-    private static final Logger logger = getLogger(WeightFailover.class);
+    private static final Logger LOGGER = getLogger(WeightFailover.class);
 
     private final IntUnaryOperator failReduceWeight;
     private final IntUnaryOperator successIncreaseWeight;
@@ -114,6 +114,7 @@ public class WeightFailover<T> implements Failover<T>, Closeable {
 
     /**
      * 获取一个新的builder。
+     *
      * @param <E> 要构建的资源的类型
      * @return builder
      */
@@ -136,7 +137,7 @@ public class WeightFailover<T> implements Failover<T>, Closeable {
             recoveryFuture.ifPresent(future -> {
                 if (!future.isCancelled()) {
                     if (!future.cancel(true)) {
-                        logger.warn("fail to close failover:{}", nameSupplier.get());
+                        LOGGER.warn("fail to close failover:{}", nameSupplier.get());
                     }
                 }
             });
@@ -151,13 +152,13 @@ public class WeightFailover<T> implements Failover<T>, Closeable {
     @Override
     public void fail(T object) {
         if (object == null) {
-            logger.warn("invalid fail call, null object found.");
+            LOGGER.warn("invalid fail call, null object found.");
             return;
         }
         currentWeightMap.compute(object, (k, oldValue) -> {
             if (oldValue == null) {
                 if (weightOnMissingNode == null) {
-                    logger.warn("invalid fail obj:{}, it's not in original list.", object);
+                    LOGGER.warn("invalid fail obj:{}, it's not in original list.", object);
                     return null;
                 } else {
                     oldValue = weightOnMissingNode;
@@ -172,7 +173,7 @@ public class WeightFailover<T> implements Failover<T>, Closeable {
                 }
             }
             if (result == 0) {
-                logger.warn("found down object:{}", k);
+                LOGGER.warn("found down object:{}", k);
                 recoveryFuture.get();
             }
             return result;
@@ -183,13 +184,13 @@ public class WeightFailover<T> implements Failover<T>, Closeable {
     @Override
     public void down(T object) {
         if (object == null) {
-            logger.warn("invalid fail call, null object found.");
+            LOGGER.warn("invalid fail call, null object found.");
             return;
         }
         currentWeightMap.compute(object, (k, oldValue) -> {
             if (oldValue == null) {
                 if (weightOnMissingNode == null) {
-                    logger.warn("invalid fail obj:{}, it's not in original list.", object);
+                    LOGGER.warn("invalid fail obj:{}, it's not in original list.", object);
                     return null;
                 } else {
                     oldValue = weightOnMissingNode;
@@ -203,7 +204,7 @@ public class WeightFailover<T> implements Failover<T>, Closeable {
                 }
             }
             if (result == 0) {
-                logger.warn("found down object:{}", k);
+                LOGGER.warn("found down object:{}", k);
                 recoveryFuture.get();
             }
             return result;
@@ -315,11 +316,11 @@ public class WeightFailover<T> implements Failover<T>, Closeable {
 
     @Override
     public void success(T object) {
-        boolean[] availableChanged = { false };
+        boolean[] availableChanged = {false};
         currentWeightMap.compute(object, (k, oldValue) -> {
             if (oldValue == null) {
                 if (weightOnMissingNode == null) {
-                    logger.warn("invalid fail obj:{}, it's not in original list.", object);
+                    LOGGER.warn("invalid fail obj:{}, it's not in original list.", object);
                     return null;
                 } else {
                     availableChanged[0] = true;

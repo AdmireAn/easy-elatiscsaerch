@@ -20,7 +20,7 @@ import com.github.snail.failover.impl.PriorityFailoverBuilder.PriorityFailoverCo
 class PriorityFailoverCheckTask<T> implements Runnable {
 
     private static final Logger
-            logger = LoggerFactory.getLogger(PriorityFailoverCheckTask.class);
+            LOGGER = LoggerFactory.getLogger(PriorityFailoverCheckTask.class);
 
     private final PriorityFailoverConfig<T> config;
 
@@ -110,9 +110,9 @@ class PriorityFailoverCheckTask<T> implements Runnable {
                 } catch (Throwable e) {
                     // the test may fail, the user's onSuccess/onFail callback may fail
                     if (config.getName() == null) {
-                        logger.error("failover check/updateWeight fail: {}", e.toString());
+                        LOGGER.error("failover check/updateWeight fail: {}", e.toString());
                     } else {
-                        logger.error("failover({}) check/updateWeight fail: {}", config.getName(), e.toString());
+                        LOGGER.error("failover({}) check/updateWeight fail: {}", config.getName(), e.toString());
                     }
                 }
             }

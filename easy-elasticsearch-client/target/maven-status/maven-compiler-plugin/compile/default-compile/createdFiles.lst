@@ -1,9 +1,12 @@
 com/github/snail/result/HitEntity.class
-com/github/snail/configuration/EsSearchConfiguration.class
 com/github/snail/result/aggregation/AggregationResultInfo.class
+com/github/snail/datasource/RestConnection.class
 com/github/snail/annotation/PartitionFactor.class
+com/github/snail/datasource/BizCluster.class
+com/github/snail/constant/SourceKey.class
 com/github/snail/result/aggregation/AggregationResultParser.class
 com/github/snail/index/Document.class
+com/github/snail/config/ClientConfig.class
 com/github/snail/service/impl/ESSearchServiceImpl.class
 com/github/snail/annotation/Doc.class
 com/github/snail/annotation/Id.class
@@ -14,6 +17,7 @@ com/github/snail/result/aggregation/AggregationResults.class
 com/github/snail/result/aggregation/BucketInfo.class
 com/github/snail/result/SearchResult.class
 com/github/snail/selector/SourceSelector.class
-com/github/snail/configuration/EnableEsSearch.class
+com/github/snail/datasource/RestConnection$OpVcElasticSearchConnectionBuilder.class
 com/github/snail/service/ESSearchService.class
 com/github/snail/util/ModelTransferUtils.class
+com/github/snail/config/ClientConfigModel.class

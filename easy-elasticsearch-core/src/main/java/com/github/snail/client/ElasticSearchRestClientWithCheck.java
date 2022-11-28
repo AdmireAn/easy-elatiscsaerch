@@ -34,7 +34,6 @@ import com.github.snail.exception.NoAvailableResourceException;
 import com.github.snail.failover.SimpleFailover;
 import com.github.snail.failover.impl.PriorityFailover;
 import com.github.snail.failover.impl.RatioWeightFunction;
-import com.github.snail.failover.impl.WeightListener;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.net.HostAndPort;
@@ -230,7 +229,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
     @SuppressWarnings({"Unchecked"})
     private SimpleFailover<ElasticsearchRestClient> buildFailover(String bizName,
             Collection<ElasticsearchRestClient> clients) {
-        return PriorityFailover.<ElasticsearchRestClient> newBuilder() //
+        return PriorityFailover.<ElasticsearchRestClient>newBuilder()
                 .checker(server -> pingServer(server))
                 .checkDuration(Duration.ofSeconds(60))
                 .addResources(clients, /*minWeight*/100.0)
@@ -241,36 +240,15 @@ class ElasticSearchRestClientWithCheck implements Closeable {
                         true) //并发度控制，并发度高的资源，流量会减少。 并发度初始值是0，getOneAvailable会将并发度加1，success/fail/down会将并发度减1
                 // ，内部选择资源的时候，当前权重会除以（并发度+1），也就是说如果并发度为1，有效权重就会减半（除以2），并发度是2时，有效权重就会变为1/3。
                 .enableAutoPriority(5) // 自动优先级管理 第一组5个，剩下的归为第二组
-                .weightListener(new WeightListener() {
-                                    @Override
-                                    public void onSuccess(double maxWeight, double minWeight, int priority,
-                                            double currentOldWeight,
-                                            double currentNewWeight, Object resource) {
-                                        LOGGER.info("ElasticsearchRestClient onSuccess,{}.{},{},{}", maxWeight,
-                                                minWeight, priority,
-                                                currentNewWeight);
-                                    }
-
-                                    @Override
-                                    public void onFail(double maxWeight, double minWeight, int priority,
-                                            double currentOldWeight,
-                                            double currentNewWeight, Object resource) {
-                                        LOGGER.info("ElasticsearchRestClient onFail,{}.{},{},{}", maxWeight,
-                                                minWeight, priority,
-                                                currentNewWeight);
-                                    }
-                                }
-                ).name("elasticsearch-" + bizName) //
+                .name("elasticsearch-" + bizName) //
                 .build();
     }
 
     private boolean pingServer(ElasticsearchRestClient server) {
-        return check(server.getHostAndPort().getHost(), server.getHostAndPort().getPort(),
-                CHECKER_CONNECTION_TIME_OUT);
+        return check(server.getHostAndPort().getHost(), server.getHostAndPort().getPort(), CHECKER_CONNECTION_TIME_OUT);
     }
 
     private RestClient buildRestClient(String bizName, String host) {
-
         int connectTimeout = ServerConfig.getConnectionTimeoutMills(bizName);
         int socketTimeout = ServerConfig.getSocketTimeoutMills(bizName);
         int threadSize = ServerConfig.getIoThreadCount(bizName);

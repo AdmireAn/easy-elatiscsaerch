@@ -17,7 +17,8 @@ import com.github.snail.client.ElasticsearchRestClient;
  * Created on 2022-11-28
  */
 public final class ElasticSearchDefaultResponseListener implements ElasticSearchResponseListener {
-    private static final Logger logger = LoggerFactory
+    private static final Logger LOGGER
+            = LoggerFactory
             .getLogger(ElasticSearchDefaultResponseListener.class);
 
     @Override
@@ -54,7 +55,7 @@ public final class ElasticSearchDefaultResponseListener implements ElasticSearch
     private void onFailure(ElasticSearchRestClusterConfig cluster, ElasticsearchRestClient restClient,
             Exception exception, String index, String type, String opType) {
         restClient.getFailover().fail(restClient);
-        logger.error("{} {} {} es failure.", cluster.getName(), index, opType, exception);
+        LOGGER.error("{} {} {} es failure.", cluster.getName(), index, opType, exception);
         // log and perf here
     }
 }

@@ -16,7 +16,7 @@ import com.google.errorprone.annotations.CanIgnoreReturnValue;
  * @author snail
  * Created on 2022-11-28
  */
-public class ElasticSearchRestFuture <V> extends AbstractFuture<V> {
+public final class ElasticSearchRestFuture<V> extends AbstractFuture<V> {
 
     private static final long DEFAULT_TIMEOUT_SECONDS = 60;
 

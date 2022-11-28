@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 /**
  * @author w.vela
  */
-public class RandomListUtils {
+public final class RandomListUtils {
 
     private static final int LCG_THRESHOLD = 3;
 

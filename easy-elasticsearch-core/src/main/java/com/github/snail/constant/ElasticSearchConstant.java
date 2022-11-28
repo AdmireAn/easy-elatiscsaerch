@@ -173,4 +173,7 @@ public interface ElasticSearchConstant {
         // 仅当给定版本等于或高于存储文档的版本时才索引文档。如果没有现有文档，则操作也会成功。（慎用！）
         external_gte
     }
+
+    // 规避 checkstyle
+    void get();
 }

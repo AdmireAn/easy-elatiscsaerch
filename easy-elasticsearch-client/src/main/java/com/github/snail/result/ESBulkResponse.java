@@ -29,9 +29,9 @@ import com.google.common.collect.Lists;
  * @author snail
  * Created on 2022-11-28
  */
-public class ESBulkResponse {
+public final class ESBulkResponse {
 
-    private static final Logger logger = LoggerFactory.getLogger(ESBulkResponse.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ESBulkResponse.class);
 
     private static final String TOOK = "took";
     private static final String ERRORS = "errors";
@@ -102,7 +102,7 @@ public class ESBulkResponse {
             try {
                 return IOUtils.toString(response.getEntity().getContent(), Charsets.UTF_8);
             } catch (IOException e) {
-                logger.warn("convert es response failed. {}", e.getMessage());
+                LOGGER.warn("convert es response failed. {}", e.getMessage());
             }
         }
         return StringUtils.EMPTY;

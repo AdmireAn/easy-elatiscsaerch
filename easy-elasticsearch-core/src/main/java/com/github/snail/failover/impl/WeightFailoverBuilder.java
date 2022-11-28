@@ -33,7 +33,7 @@ import com.github.snail.util.ThrowablePredicate;
 @SuppressWarnings({"checkstyle:VisibilityModifier", "checkstyle:HiddenField"})
 public class WeightFailoverBuilder<T> {
 
-    private static final Logger logger = getLogger(WeightFailoverBuilder.class);
+    private static final Logger LOGGER = getLogger(WeightFailoverBuilder.class);
 
     private static final int DEFAULT_INIT_WEIGHT = 100;
     private static final int DEFAULT_FAIL_REDUCE_WEIGHT = 5;
@@ -243,7 +243,7 @@ public class WeightFailoverBuilder<T> {
             try {
                 return failChecker.apply(t);
             } catch (Throwable e) {
-                logger.error("", e);
+                LOGGER.error("", e);
                 return 0;
             }
         };
@@ -318,7 +318,7 @@ public class WeightFailoverBuilder<T> {
             checkNotNull(checker);
         } else {
             if (checker != null) {
-                logger.warn(
+                LOGGER.warn(
                         "a failover checker found but minWeight>0. the checker would never reached.");
             }
         }

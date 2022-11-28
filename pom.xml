@@ -20,7 +20,7 @@
         <elasticsearch-rest-client.version>6.7.2</elasticsearch-rest-client.version>
         <logback-classic.version>1.4.4</logback-classic.version>
         <spring-context.version>4.3.7.RELEASE</spring-context.version>
-        <spring-test.version>5.3.23</spring-test.version>
+        <spring-test.version>4.1.6.RELEASE</spring-test.version>
         <slf4j-api.version>1.7.25</slf4j-api.version>
         <commons-lang3.version>3.12.0</commons-lang3.version>
         <guava.version>31.1-jre</guava.version>
@@ -38,10 +38,33 @@
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
             <version>${elasticsearch.version}</version>
-            <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>${elasticsearch-rest-client.version}</version>
+        </dependency>
         <!-- springframework -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.3.7.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring-context.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring-context.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring-context.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>

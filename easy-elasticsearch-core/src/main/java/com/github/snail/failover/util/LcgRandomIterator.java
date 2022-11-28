@@ -12,14 +12,14 @@ import javax.annotation.Nonnull;
 
 /**
  * base on https://en.wikipedia.org/wiki/Linear_congruential_generator
- * 
+ *
  * @author w.vela
  * Created on 2018-02-26.
  */
 class LcgRandomIterator<T> implements Iterator<T> {
 
-    private static final int c = 11;
-    private static final long a = 25214903917L;
+    private static final int C = 11;
+    private static final long A = 25214903917L;
 
     private final List<T> original;
     private final long seed;
@@ -36,7 +36,8 @@ class LcgRandomIterator<T> implements Iterator<T> {
         this.original = checkNotNull(original);
         this.n = original.size();
         m = (long) Math.pow(2, Math.ceil(Math.log(n) / Math.log(2)));
-        next = seed = ThreadLocalRandom.current().nextLong(Math.min(n, Integer.MAX_VALUE));
+        seed = ThreadLocalRandom.current().nextLong(Math.min(n, Integer.MAX_VALUE));
+        next = seed;
     }
 
     @Override
@@ -49,9 +50,9 @@ class LcgRandomIterator<T> implements Iterator<T> {
         if (!hasNext) {
             throw new NoSuchElementException();
         }
-        next = (a * next + c) % m;
+        next = (A * next + C) % m;
         while (next >= n) {
-            next = (a * next + c) % m;
+            next = (A * next + C) % m;
         }
         if (next == seed) {
             hasNext = false;
