@@ -6,7 +6,7 @@ package com.github.snail.tuple;
  */
 public class ThreeTuple<A, B, C> extends TwoTuple<A, B> {
 
-    public final C third;
+    private final C third;
 
     /**
      * use {@link Tuple#tuple(Object, Object, Object)} instead
@@ -23,7 +23,7 @@ public class ThreeTuple<A, B, C> extends TwoTuple<A, B> {
 
     @Override
     public String toString() {
-        return "(" + first + ", " + second + ", " + third + ")";
+        return "(" + getFirst() + ", " + getSecond() + ", " + third + ")";
     }
 
     @Override

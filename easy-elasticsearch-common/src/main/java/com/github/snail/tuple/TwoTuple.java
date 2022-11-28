@@ -5,9 +5,9 @@ package com.github.snail.tuple;
  * Created on 2022-11-28
  */
 public class TwoTuple<A, B> {
-    public final A first;
+    private final A first;
 
-    public final B second;
+    private final B second;
 
     /**
      * use {@link Tuple#tuple(Object, Object)} instead

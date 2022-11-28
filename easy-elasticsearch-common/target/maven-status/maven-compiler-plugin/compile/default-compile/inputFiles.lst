@@ -1,11 +1,13 @@
 /Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/tuple/TwoTuple.java
-/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/tuple/ThreeTuple.java
 /Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/exception/EasyElasticsearchException.java
-/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/MoreSuppliers.java
 /Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/ThrowableConsumer.java
-/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/ThrowableSupplier.java
 /Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/SingletonFactory.java
 /Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/constants/StatusEnum.java
-/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/exception/UncheckedJsonProcessingException.java
+/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/ThrowablePredicate.java
+/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/QueryBuilderUtils.java
 /Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/ObjectMapperUtils.java
 /Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/tuple/Tuple.java
+/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/tuple/ThreeTuple.java
+/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/MoreSuppliers.java
+/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/util/ThrowableSupplier.java
+/Users/yonganwang/Documents/kuaishou-java/easy-elasticsearch/easy-elasticsearch-common/src/main/java/com/github/snail/exception/UncheckedJsonProcessingException.java

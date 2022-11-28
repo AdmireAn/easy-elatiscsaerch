@@ -49,7 +49,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  */
 class ElasticSearchRestClientWithCheck implements Closeable {
 
-    private static final Logger logger = LoggerFactory
+    private static final Logger LOGGER = LoggerFactory
             .getLogger(ElasticSearchRestClientWithCheck.class);
     private static final int MAX_LOOP_TIMES = 5;
     private static final int MONITOR_SECONDS = 15;
@@ -87,7 +87,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
             try {
                 if (System.currentTimeMillis()
                         - lastHeartbeatTimeMills.get() > HEARTBEAT_TIMEOUT_MILLS) {
-                    logger.warn("{} heartbeat timeout, refresh.", bizName);
+                    LOGGER.warn("{} heartbeat timeout, refresh.", bizName);
                     refresh();
                     // 重建monitorService
                     ExecutorService old = monitorExecutorServiceReference
@@ -95,7 +95,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
                     old.shutdownNow();
                 }
             } catch (Throwable t) {
-                logger.error("es heartbeat error. biz: {}", bizName, t);
+                LOGGER.error("es heartbeat error. biz: {}", bizName, t);
             }
         }, 3, HEART_BEAT_SECONDS, TimeUnit.SECONDS);
     }
@@ -138,13 +138,13 @@ class ElasticSearchRestClientWithCheck implements Closeable {
                 failover.getAll().forEach(e -> {
                     if (!check(e.getHostAndPort().getHost(), e.getHostAndPort().getPort(),
                             CHECKER_CONNECTION_TIME_OUT)) {
-                        logger.warn("es base check failed. biz: {} {}", innerBizName,
+                        LOGGER.warn("es base check failed. biz: {} {}", innerBizName,
                                 e.getHostAndPort());
                         failover.down(e);
                     }
                 });
             } catch (Throwable t) {
-                logger.error("es index check failed. biz: {}", innerBizName, t);
+                LOGGER.error("es index check failed. biz: {}", innerBizName, t);
             }
         }, 3, 3, TimeUnit.SECONDS);
 
@@ -153,17 +153,17 @@ class ElasticSearchRestClientWithCheck implements Closeable {
                 int statusCode = getOne().getRestClient()
                         .performRequest("GET", "/", ImmutableMap.of()).getStatusLine()
                         .getStatusCode();
-                logger.debug("es monitor. biz: {} status: {}", innerBizName, statusCode);
+                LOGGER.debug("es monitor. biz: {} status: {}", innerBizName, statusCode);
                 lastHeartbeatTimeMills.set(System.currentTimeMillis());
             } catch (IllegalStateException e) {
                 String message = e.getMessage();
                 // 不可恢复异常，直接重建
                 if (StringUtils.contains(message, "I/O reactor status: STOPPED")) {
-                    logger.warn("es restclient rebuild. biz: {}", innerBizName);
+                    LOGGER.warn("es restclient rebuild. biz: {}", innerBizName);
                     refresh();
                 }
             } catch (Throwable t) {
-                logger.warn("es monitor failed. {}", t.getClass().getSimpleName());
+                LOGGER.warn("es monitor failed. {}", t.getClass().getSimpleName());
             }
         }, 3, MONITOR_SECONDS, TimeUnit.SECONDS);
 
@@ -173,7 +173,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
     private synchronized void refresh() {
 
         if (!refreshRateLimiter.tryAcquire()) {
-            logger.warn("es refresh exceed threshold. ignore. bizName: {}", innerBizName);
+            LOGGER.warn("es refresh exceed threshold. ignore. bizName: {}", innerBizName);
             return;
         }
 
@@ -202,7 +202,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
                 (selectedHosts.size() < clientSize));
 
         if (selectedHosts.size() == 0) {
-            logger.warn("no available host. ignore refresh. bizName: {}", innerBizName);
+            LOGGER.warn("no available host. ignore refresh. bizName: {}", innerBizName);
             return;
         }
 
@@ -223,7 +223,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
             old.getAll().forEach(e -> closeQuietly(e.getRestClient()));
         }
 
-        logger.info("es config refreshed. biz: {} hosts: {}", innerBizName, hosts.stream()
+        LOGGER.info("es config refreshed. biz: {} hosts: {}", innerBizName, hosts.stream()
                 .map(ElasticsearchRestClient::getHostAndPort).collect(Collectors.toList()));
     }
 
@@ -246,7 +246,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
                                     public void onSuccess(double maxWeight, double minWeight, int priority,
                                             double currentOldWeight,
                                             double currentNewWeight, Object resource) {
-                                        logger.info("ElasticsearchRestClient onSuccess,{}.{},{},{}", maxWeight,
+                                        LOGGER.info("ElasticsearchRestClient onSuccess,{}.{},{},{}", maxWeight,
                                                 minWeight, priority,
                                                 currentNewWeight);
                                     }
@@ -255,7 +255,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
                                     public void onFail(double maxWeight, double minWeight, int priority,
                                             double currentOldWeight,
                                             double currentNewWeight, Object resource) {
-                                        logger.info("ElasticsearchRestClient onFail,{}.{},{},{}", maxWeight,
+                                        LOGGER.info("ElasticsearchRestClient onFail,{}.{},{},{}", maxWeight,
                                                 minWeight, priority,
                                                 currentNewWeight);
                                     }
@@ -302,7 +302,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
 
                     @Override
                     public void onFailure(Node node) {
-                        logger.warn("es host failed. biz: {} host: {}", bizName, host);
+                        LOGGER.warn("es host failed. biz: {} host: {}", bizName, host);
                     }
                 }).build();
     }

@@ -1,0 +1,9 @@
+/.idea/
+/target/
+/easy-elasticsearch-client/target/
+/easy-elasticsearch-common/target/
+/easy-elasticsearch-core/target/
+/easy-elasticsearch.iml
+.classpath
+.project
+.DS_Store

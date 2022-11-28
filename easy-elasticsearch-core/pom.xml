@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>easy-elasticsearch</artifactId>
-        <groupId>org.example</groupId>
+        <groupId>github.snail</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -15,8 +15,14 @@
     <dependencies>
         <dependency>
             <artifactId>easy-elasticsearch-common</artifactId>
-            <groupId>org.example</groupId>
-            <version>1.0-SNAPSHOT</version>
+            <groupId>github.snail</groupId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-client</artifactId>
+            <version>${elasticsearch-rest-client.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

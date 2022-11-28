@@ -137,7 +137,7 @@ public final class MoreSuppliers {
      *
      * @param <T> 提供值的泛型
      */
-    public static class CloseableSupplier<T> implements Supplier<T>, Serializable {
+    public static final class CloseableSupplier<T> implements Supplier<T>, Serializable {
 
         private static final long serialVersionUID = 0L;
 
@@ -247,7 +247,7 @@ public final class MoreSuppliers {
      * @param <T> 提供值泛型
      * @param <X> 操作异常泛型
      */
-    public static class CloseableThrowableSupplier<T, X extends Throwable>
+    public static final class CloseableThrowableSupplier<T, X extends Throwable>
             implements ThrowableSupplier<T, X>, Serializable {
 
         private static final long serialVersionUID = 0L;
