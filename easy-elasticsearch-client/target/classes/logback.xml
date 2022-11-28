@@ -1,0 +1,35 @@
+<configuration scan="true" scanPeriod="1 seconds">
+
+    <property name="defaultPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %t \\(%F:%L\\) - %msg%n"/>
+
+    <!-- 日志输出到控制台 -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <!-- 日志输出格式 -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="[%p][%d{yyyy-MM-dd HH:mm:ss SSS}][%c]-[%m]%n"/>
+        </layout>
+
+        <!--过滤器设置输出的级别-->
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <!-- 设置日志输出的最小级别 -->
+            <param name="levelMin" value="INFO"/>
+            <!-- 设置日志输出的最大级别 -->
+            <param name="levelMax" value="ERROR"/>
+        </filter>
+    </appender>
+
+    <appender name="errorConsole" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+        <encoder>
+            <pattern>${defaultPattern}</pattern>
+        </encoder>
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+    </root>
+
+    <logger name="com.github.sail" level="error" additivity="false">
+        <appender-ref ref="errorConsole"/>
+    </logger>
+</configuration>

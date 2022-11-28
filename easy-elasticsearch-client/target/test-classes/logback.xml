@@ -1,0 +1,21 @@
+<configuration scan="true" scanPeriod="1 seconds">
+
+    <!-- 自定义属性 -->
+    <property name="pattern" value="%X{thread} [%date{yyyy-MM-dd HH:mm:ss.SSS}] %level %logger{36} %line - %msg%n"/>
+
+    <!--控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- 设置日志输出格式 -->
+            <pattern>${pattern}</pattern>
+
+            <!-- 设置输出字符集编码 -->
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- 根root looger -->
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>

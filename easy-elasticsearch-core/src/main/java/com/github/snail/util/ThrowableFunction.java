@@ -1,0 +1,29 @@
+package com.github.snail.util;
+
+import static java.util.Objects.requireNonNull;
+
+/**
+ * @author wangyongan <wangyongan@kuaishou.com>
+ * Created on 2022-11-28
+ */
+@FunctionalInterface
+public interface ThrowableFunction<T, R, X extends Throwable> {
+
+    static <T, X extends Throwable> ThrowableFunction<T, T, X> identity() {
+        return t -> t;
+    }
+
+    R apply(T t) throws X;
+
+    default <V> ThrowableFunction<V, R, X>
+    compose(ThrowableFunction<? super V, ? extends T, X> before) {
+        requireNonNull(before);
+        return (V v) -> apply(before.apply(v));
+    }
+
+    default <V> ThrowableFunction<T, V, X>
+    andThen(ThrowableFunction<? super R, ? extends V, X> after) {
+        requireNonNull(after);
+        return (T t) -> after.apply(apply(t));
+    }
+}
