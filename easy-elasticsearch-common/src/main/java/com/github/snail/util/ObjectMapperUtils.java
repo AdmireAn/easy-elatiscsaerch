@@ -30,7 +30,6 @@ public final class ObjectMapperUtils {
     /**
      * disable INTERN_FIELD_NAMES, 解决GC压力大、内存泄露的问题
      *
-     * @see <a href="https://jira.corp.kuaishou.com/browse/INFRAJAVA-552">JIRA</a>
      */
     private static final ObjectMapper MAPPER = new ObjectMapper(new JsonFactory().disable(INTERN_FIELD_NAMES));
 

@@ -18,7 +18,7 @@ import com.github.snail.util.SingletonFactory;
 import com.google.common.collect.Lists;
 
 /**
- * @author wangyongan <wangyongan@kuaishou.com>
+ * @author wangyongan
  * Created on 2022-11-26
  */
 public class SnailTest1 extends BaseJunit4Test{
@@ -26,7 +26,6 @@ public class SnailTest1 extends BaseJunit4Test{
     private final ESSearchService esSearchService = SingletonFactory.getInstance(ESSearchServiceImpl.class);
     @Test
     public void testWriteEs() {
-
         Item item = new Item();
         item.setItemId(882301L);
         item.setItemName("大苹果");

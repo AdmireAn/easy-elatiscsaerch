@@ -3,7 +3,7 @@ package com.github.snail.util;
         import static java.util.Objects.requireNonNull;
 
 /**
- * @author wangyongan <wangyongan@kuaishou.com>
+ * @author wangyongan
  * Created on 2022-11-28
  */
 @FunctionalInterface

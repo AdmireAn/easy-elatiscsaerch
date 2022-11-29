@@ -78,8 +78,7 @@ public class ESSearchServiceImpl implements ESSearchService {
                 if (esBulkResponse.errors()) {
                     String cluster = connection.cluster().getName();
                     LOGGER.error(
-                            "elasticsearch asyncBulkUpsert request fail,请联系tianwenlong确认是否集群问题，是否需要切换备用集群, "
-                                    + "resource:{},cluster:{}", sourceKey, cluster);
+                            "elasticsearch asyncBulkUpsert request fail resource:{},cluster:{}", sourceKey, cluster);
                 }
                 LOGGER.info("asyncBulkUpsert operation, resource:{}, index:{}, type:{}, size:{},rsp:{}",
                         sourceKey,
@@ -128,7 +127,7 @@ public class ESSearchServiceImpl implements ESSearchService {
                 ThreeTuple tuple = Tuple.tuple(partition, id, ObjectMapperUtils.fromJson(document.getSource()));
                 tuples.add(tuple);
             } catch (Exception e) {
-                LOGGER.error("buildBulkData发生异常 商品检索库更新失败,doc:{}", ObjectMapperUtils.toJSON(doc), e);
+                LOGGER.error("buildBulkData error,doc:{}", ObjectMapperUtils.toJSON(doc), e);
             }
         });
         return tuples;

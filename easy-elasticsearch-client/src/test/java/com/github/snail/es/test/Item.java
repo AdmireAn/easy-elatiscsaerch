@@ -5,7 +5,7 @@ import com.github.snail.annotation.Id;
 import com.github.snail.annotation.PartitionFactor;
 
 /**
- * @author wangyongan <wangyongan@kuaishou.com>
+ * @author wangyongan
  * Created on 2022-11-26
  */
 @Doc(sourceKey = "easy-write-elasticsearch")

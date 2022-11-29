@@ -30,9 +30,9 @@ import com.google.common.collect.ImmutableList;
  * <p>
  * 做了分片的索引 写入数据需指定具体的索引名字  读索引使用别名即可
  * <p>
- * 比如分区2 op-vc-item-index-0,op-vc-item-index-1
+ * 比如分区2 item-index-0,item-index-1
  * 写入数据需要写入哪一个分区
- * 读数据使用别名op-vc-item-index-alias即可
+ * 读数据使用别名item-index-alias即可
  * <p>
  * resource+cluster唯一确定了一个AladdinRestConnection实例
  *
@@ -138,8 +138,8 @@ public class RestConnection implements ElasticSearchRestIndexConfig {
     }
 
     /**
-     * kconf key + cluster唯一确定一个connection实例
-     * kuaishou-es用ConcurrentMap缓存connection
+     * sourceKey + cluster唯一确定一个connection实例
+     * 用ConcurrentMap缓存connection
      */
     @Override
     public boolean equals(Object o) {

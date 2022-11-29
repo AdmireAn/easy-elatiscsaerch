@@ -29,8 +29,6 @@ public interface ESSearchService {
      * SearchResult：支持将返回结果转换成实体，内部使用Jackson。也可以转换成Map， 替换 hit.source(UserInfo.class) → hit.sourceMap() 即可。
      * total方法：如果想查看当前条件一共命中了多少文档，可以使用这个方法。 total >= result.entities().size()
      *
-     * @param query kuaishou-es的es查询语法
-     * @param sourceKey 索引zai kconf配置的key
      */
     <T> SearchResult<T> read(ElasticSearchRestQuery query, SourceKey sourceKey);
 
