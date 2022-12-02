@@ -5,7 +5,7 @@
       <list>
         <IssueNavigationLink>
           <option name="issueRegexp" value=" T(\d+)" />
-          <option name="linkRegexp" value="https://team.corp.kuaishou.com/web/task/T$1" />
+          <option name="linkRegexp" value="https://12.com" />
         </IssueNavigationLink>
       </list>
     </option>
