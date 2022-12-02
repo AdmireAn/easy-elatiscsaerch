@@ -1,12 +1,6 @@
 package com.github.snail.client;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
 
 import org.slf4j.Logger;
@@ -17,8 +11,6 @@ import com.github.snail.az.PhysicalAvailableZone;
 import com.github.snail.config.ElasticSearchRestClusterConfig;
 import com.github.snail.tuple.ThreeTuple;
 import com.github.snail.tuple.Tuple;
-import com.github.snail.tuple.TwoTuple;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * @author snail
@@ -34,24 +26,12 @@ public final class ElasticSearchRestClientHolder {
             ElasticSearchRestClientHolder>
             INSTANCES //
             = new ConcurrentHashMap<>();
-    private static final ConcurrentHashMap<TwoTuple<AvailableZone, String>, ElasticSearchRestClientHolder>
-            DEPRECATED_INSTANCES //
-            = new ConcurrentHashMap<>();
 
     private final Supplier<ElasticSearchRestClientWithCheck> newNode;
     private final ElasticSearchRestClusterConfig clusterConfig;
     private final String bizName;
     private AvailableZone az;
     private PhysicalAvailableZone paz;
-
-    private static final double BACK_OFF_EXP = 1.5;
-    private static final long MAX_BACK_OFF_MS = TimeUnit.MINUTES.toMillis(5);
-    private final long initBackOffMs = ThreadLocalRandom.current().nextInt(1000, 2000);
-    private static final ScheduledExecutorService DELAY_CLEANUP_SCHEDULED_EXECUTOR_SERVICE =
-            Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder()
-                    .setNameFormat("delay-cleanup-schedule-%d").build());
-    private static final long WAIT_AFTER_CLOSE = SECONDS.toMillis(10);
-
 
     private ElasticSearchRestClientHolder(AvailableZone az, ElasticSearchRestClusterConfig clusterConfig,
             PhysicalAvailableZone paz) {

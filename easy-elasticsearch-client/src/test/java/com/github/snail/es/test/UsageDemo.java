@@ -18,10 +18,10 @@ import com.github.snail.util.SingletonFactory;
 import com.google.common.collect.Lists;
 
 /**
- * @author wangyongan
+ * @author snail
  * Created on 2022-11-26
  */
-public class SnailTest1 extends BaseJunit4Test{
+public class UsageDemo extends BaseJunit4Test{
 
     private final ESSearchService esSearchService = SingletonFactory.getInstance(ESSearchServiceImpl.class);
     @Test
@@ -53,9 +53,6 @@ public class SnailTest1 extends BaseJunit4Test{
     }
 
     public static BoolQueryBuilder build() {
-        BoolQueryBuilder queryBuilder = new BoolQueryBuilder();
-        queryBuilder.filter(QueryBuilders.matchAllQuery());
-        //queryBuilder.filter(QueryBuilders.rangeQuery("price").gte(0));
-        return queryBuilder;
+        return new BoolQueryBuilder().filter(QueryBuilders.matchAllQuery());
     }
 }

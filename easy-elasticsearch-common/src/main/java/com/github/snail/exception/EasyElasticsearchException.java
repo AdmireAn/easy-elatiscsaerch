@@ -1,5 +1,7 @@
 package com.github.snail.exception;
 
+import com.github.snail.constants.StatusEnum;
+
 /**
  * @author snail
  * Created on 2022-11-28
@@ -14,6 +16,11 @@ public class EasyElasticsearchException extends RuntimeException {
     public EasyElasticsearchException(String message, int code) {
         this.message = message;
         this.code = code;
+    }
+
+    public EasyElasticsearchException(StatusEnum statusEnum) {
+        this.message = statusEnum.getMessage();
+        this.code = statusEnum.getCode();
     }
 
     public String getMessage() {

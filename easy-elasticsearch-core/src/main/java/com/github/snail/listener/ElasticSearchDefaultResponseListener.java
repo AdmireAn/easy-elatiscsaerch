@@ -13,6 +13,7 @@ import com.github.snail.ElasticSearchRestIndexConfig;
 import com.github.snail.client.ElasticsearchRestClient;
 
 /**
+ * 监听到ES请求结束 打点or日志
  * @author snail
  * Created on 2022-11-28
  */

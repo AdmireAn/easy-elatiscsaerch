@@ -5,6 +5,7 @@ import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_COMMENTS;
 import static com.fasterxml.jackson.core.JsonParser.Feature.ALLOW_UNQUOTED_CONTROL_CHARS;
 import static com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES;
 import static com.fasterxml.jackson.databind.type.TypeFactory.defaultInstance;
+import static com.github.snail.constants.StatusEnum.JSON_PROCESSING_EXCEPTION;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -17,7 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.snail.exception.UncheckedJsonProcessingException;
+import com.github.snail.exception.EasyElasticsearchException;
 
 /**
  * @author snail
@@ -59,7 +60,7 @@ public final class ObjectMapperUtils {
         try {
             return MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            throw new UncheckedJsonProcessingException(e);
+            throw new EasyElasticsearchException(JSON_PROCESSING_EXCEPTION);
         }
     }
 
@@ -76,7 +77,7 @@ public final class ObjectMapperUtils {
 
     private static RuntimeException wrapException(IOException e) {
         if (e instanceof JsonProcessingException) {
-            return new UncheckedJsonProcessingException((JsonProcessingException) e);
+            throw new EasyElasticsearchException(JSON_PROCESSING_EXCEPTION);
         } else {
             return new UncheckedIOException(e);
         }
@@ -95,7 +96,7 @@ public final class ObjectMapperUtils {
         try {
             return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            throw new UncheckedJsonProcessingException(e);
+            throw new EasyElasticsearchException(JSON_PROCESSING_EXCEPTION);
         }
     }
 

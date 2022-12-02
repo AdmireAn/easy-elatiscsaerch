@@ -1,5 +1,6 @@
 package com.github.snail.client;
 
+import static com.github.snail.constants.StatusEnum.NO_AVAILABLE_RESOURCE;
 import static com.github.snail.util.EasyElasticsearchUtils.check;
 import static com.github.snail.util.EasyElasticsearchUtils.closeQuietly;
 
@@ -30,7 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.github.snail.config.ServerConfig;
-import com.github.snail.exception.NoAvailableResourceException;
+import com.github.snail.exception.EasyElasticsearchException;
 import com.github.snail.failover.SimpleFailover;
 import com.github.snail.failover.impl.PriorityFailover;
 import com.github.snail.failover.impl.RatioWeightFunction;
@@ -108,8 +109,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
         }
         if (client == null) {
             refresh();
-            throw new NoAvailableResourceException(
-                    "no " + innerBizName + " es rest client. will rebuild");
+            throw new EasyElasticsearchException(NO_AVAILABLE_RESOURCE);
         }
         return client;
     }
@@ -229,7 +229,7 @@ class ElasticSearchRestClientWithCheck implements Closeable {
     @SuppressWarnings({"Unchecked"})
     private SimpleFailover<ElasticsearchRestClient> buildFailover(String bizName,
             Collection<ElasticsearchRestClient> clients) {
-        return PriorityFailover.<ElasticsearchRestClient>newBuilder()
+        return PriorityFailover.<ElasticsearchRestClient> newBuilder()
                 .checker(server -> pingServer(server))
                 .checkDuration(Duration.ofSeconds(60))
                 .addResources(clients, /*minWeight*/100.0)

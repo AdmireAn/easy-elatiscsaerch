@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Nonnull;
 
@@ -47,7 +46,6 @@ import com.github.snail.az.AvailableZone;
 import com.github.snail.az.PhysicalAvailableZone;
 import com.github.snail.client.ElasticSearchRestClientHolder;
 import com.github.snail.client.ElasticsearchRestClient;
-import com.github.snail.config.ElasticSearchRestClusterConfig;
 import com.github.snail.listener.ElasticSearchDefaultResponseListener;
 import com.github.snail.listener.ElasticSearchResponseListener;
 import com.github.snail.tuple.ThreeTuple;
@@ -70,13 +68,10 @@ public final class ElasticSearchRestIndex {
     private String indexName = "";
     private String aliasName = "";
     private final ElasticSearchRestIndexConfig restIndexConfig;
-    private final ElasticSearchRestClusterConfig cluster;
     private final ElasticSearchResponseListener responseListener;
     private final ElasticSearchIndexPartitioner elasticSearchIndexPartitioner;
     private final AvailableZone az;
     private final PhysicalAvailableZone paz;
-
-    private static final int MIN_CONNECTION_POOL_TIMEOUT = (int) TimeUnit.SECONDS.toMillis(3);
 
     private static final ConcurrentMap<TwoTuple<AvailableZone, ElasticSearchRestIndexConfig>,
             ElasticSearchRestIndex> INSTANCES = new ConcurrentHashMap<>();
@@ -99,7 +94,6 @@ public final class ElasticSearchRestIndex {
         checkArgument(conf != null);
         checkArgument(StringUtils.isNotEmpty(conf.indexName()));
         this.restIndexConfig = conf;
-        this.cluster = conf.cluster();
         this.indexName = conf.indexName();
         this.aliasName = conf.aliasName();
         this.elasticSearchIndexPartitioner = conf.partitioner();

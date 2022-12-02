@@ -1,5 +1,6 @@
 package com.github.snail.failover.util;
 
+import static com.github.snail.constants.StatusEnum.NO_AVAILABLE_RESOURCE;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Predicates.alwaysTrue;
 import static com.google.common.base.Throwables.getRootCause;
@@ -18,7 +19,7 @@ import java.util.function.Predicate;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 
-import com.github.snail.exception.NoAvailableResourceException;
+import com.github.snail.exception.EasyElasticsearchException;
 import com.github.snail.failover.Failover;
 import com.github.snail.util.ThrowableConsumer;
 import com.github.snail.util.ThrowableFunction;
@@ -69,7 +70,7 @@ public final class FailoverUtils {
                     }
                 }
             } else {
-                throw new NoAvailableResourceException();
+                throw new EasyElasticsearchException(NO_AVAILABLE_RESOURCE);
             }
         }
         //noinspection unchecked
@@ -93,7 +94,7 @@ public final class FailoverUtils {
                 throw e;
             }
         } else {
-            throw new NoAvailableResourceException();
+            throw new EasyElasticsearchException(NO_AVAILABLE_RESOURCE);
         }
     }
 

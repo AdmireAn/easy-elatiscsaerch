@@ -34,7 +34,6 @@ import com.google.common.collect.ImmutableList;
  * 写入数据需要写入哪一个分区
  * 读数据使用别名item-index-alias即可
  * <p>
- * resource+cluster唯一确定了一个AladdinRestConnection实例
  *
  * @author snail
  * Created on 2022-11-28
